@@ -24,5 +24,6 @@ ansible-galaxy collection install pytoccaz.utils
 Name | Description
 --- | ---
 [pytoccaz.utils.get_binary_path](https://github.com/pytoccaz/ansible_utils/blob/main/docs/pytoccaz.utils.get_binary_path_module.rst)|Find system executable
+[pytoccaz.utils.python_module_check](https://github.com/pytoccaz/ansible_utils/blob/main/docs/pytoccaz.utils.python_module_check_module.rst)|Is a python module available
 
 <!--end collection content-->

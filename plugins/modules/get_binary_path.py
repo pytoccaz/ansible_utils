@@ -95,7 +95,7 @@ EXAMPLES = '''
         name: python3
       register: python_binary
 
-    - debug: 
+    - debug:
         var: python_binary.path
 
 '''

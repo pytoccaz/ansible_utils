@@ -81,12 +81,12 @@ Examples
 .. code-block:: yaml
 
     - name: Search python3 in PATH
-      pytoccaz.utils.get_binary_path:
-        name: python3
-      register: python_binary
+          pytoccaz.utils.get_binary_path:
+            name: python3
+          register: python_binary
 
-    - debug: 
-        var: python_binary.path
+        - debug:
+            var: python_binary.path
 
 
 
