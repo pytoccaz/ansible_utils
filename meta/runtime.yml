@@ -1,2 +1,9 @@
 ---
 requires_ansible: '>=2.13.13'
+
+plugin_routing:
+    modules:
+        get_binary_path:
+            redirect: pytoccaz.utils.binary_info
+        python_module_check:
+            redirect: pytoccaz.utils.python_module_info

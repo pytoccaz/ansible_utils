@@ -12,25 +12,29 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
 ---
-module: python_module_check
-short_description: Is a python module available
-description:  Is a python module available on target host
+module: python_module_info
+short_description: Check a python module is installed or not
+description:
+    - Check a python module or package is available on target host
+    - importlib.util.find_spec wrapper
 
 version_added: "1.1.0"
 
 options:
     name:
         description:
-            - Name of the python module
+            - Fully qualified name of the python module or package.
+            - Relative name preceded with a dot if used in combinaison with C(package) parameter
         required: true
         type: str
         aliases:
             - module_name
+            - module
         version_added: '1.1.0'
     package:
         description:
-            - Path of the python package
-            - Start name parameter value with a dot
+            - Fully qualified name of the python package
+            - Start C(name) parameter value with a dot
         required: false
         type: str
         version_added: '1.1.0'
@@ -39,21 +43,25 @@ author:
     - Olivier Bernard (@pytoccaz)
 
 notes:
-    - this module cannot check modules installed via galaxy collections
+    - This module cannot check modules installed via galaxy collections
 '''
 
 RETURN = '''
 is_installed:
-    description: If the python module is actually installed
+    description: If the python module or package is actually installed
     sample: true
-    returned: always
+    returned: success
     type: bool
-
+name:
+    description: The python module fully qualified name C(package_name.?module_name)
+    sample: html.parser
+    returned: succes
+    type: str
 '''
 
 EXAMPLES = '''
     - name: Is python-docker available ?
-      pytoccaz.utils.python_module_check:
+      pytoccaz.utils.python_module_info:
         name: docker
       register: module_docker
 
@@ -61,7 +69,7 @@ EXAMPLES = '''
         var: module_docker.is_installed
 
     - name: Is html.parser available ?
-      pytoccaz.utils.python_module_check:
+      pytoccaz.utils.python_module_info:
         name: html.parser
       register: module_parser
 
@@ -69,7 +77,7 @@ EXAMPLES = '''
         var: module_parser.is_installed
 
     - name: Is html.parser available (using package parameter) ?
-      pytoccaz.utils.python_module_check:
+      pytoccaz.utils.python_module_info:
         name: .parser
         package: html
       register: module_parser
@@ -78,7 +86,8 @@ EXAMPLES = '''
         var: module_parser.is_installed
 '''
 from ansible.module_utils.basic import AnsibleModule
-from importlib.util import find_spec
+from importlib.util import find_spec, resolve_name
+from importlib.metadata import version
 
 
 def available(modulename: str, path: str = None) -> bool:
@@ -92,20 +101,23 @@ def available(modulename: str, path: str = None) -> bool:
 
 def main():
     module = AnsibleModule(argument_spec=dict(
-        name=dict(required=True, type='str', aliases=['module_name']),
+        name=dict(required=True, type='str', aliases=['module_name', 'module']),
         package=dict(required=False, type='str'),
     ),
         supports_check_mode=True
     )
 
-    try:
-        is_installed = available(
-            module.params['name'], module.params['package'])
-    except ModuleNotFoundError as e:
-        module.fail_json(e.msg, changed=False)
+    name = module.params['name']
+    package = module.params['package']
 
-    module.exit_json(changed=False, is_installed=available(
-        module.params['name'], module.params['package']))
+    try:
+        is_installed = available(name, package)
+    except (ModuleNotFoundError):
+        is_installed = False
+    except (ValueError, AttributeError) as e:
+        module.fail_json(msg=str(e), changed=False)
+
+    module.exit_json(changed=False, name=resolve_name(name, package), is_installed=is_installed)
 
 
 if __name__ == "__main__":

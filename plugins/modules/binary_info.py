@@ -11,7 +11,7 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
 ---
-module: get_binary_path
+module: binary_info
 short_description: Find system executable
 description: Find system executable in PATH.
 
@@ -91,7 +91,7 @@ uid:
 
 EXAMPLES = '''
     - name: Search python3 in PATH
-      pytoccaz.utils.get_binary_path:
+      pytoccaz.utils.binary_info:
         name: python3
       register: python_binary
 

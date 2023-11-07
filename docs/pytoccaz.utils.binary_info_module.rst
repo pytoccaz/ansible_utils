@@ -1,9 +1,9 @@
-.. _pytoccaz.utils.get_binary_path_module:
+.. _pytoccaz.utils.binary_info_module:
 
 
-******************************
-pytoccaz.utils.get_binary_path
-******************************
+**************************
+pytoccaz.utils.binary_info
+**************************
 
 **Find system executable**
 
@@ -81,12 +81,12 @@ Examples
 .. code-block:: yaml
 
     - name: Search python3 in PATH
-          pytoccaz.utils.get_binary_path:
-            name: python3
-          register: python_binary
+      pytoccaz.utils.binary_info:
+        name: python3
+      register: python_binary
 
-        - debug:
-            var: python_binary.path
+    - debug:
+        var: python_binary.path
 
 
 
