@@ -5,7 +5,7 @@
 pytoccaz.utils.binary_info
 **************************
 
-**Find system executable**
+**Finds a system executable**
 
 
 Version added: 1.0.0
@@ -17,7 +17,7 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Find system executable in PATH.
+- Finds a system executable within ``$PATH``.
 
 
 

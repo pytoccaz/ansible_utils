@@ -5,7 +5,7 @@
 pytoccaz.utils.python_module_info
 *********************************
 
-**Check a python module is installed or not**
+**Checks whether a python module is installed or not**
 
 
 Version added: 1.1.0
@@ -17,7 +17,7 @@ Version added: 1.1.0
 
 Synopsis
 --------
-- Check a python module or package is available on target host
+- Checks a python module or package is available on target host
 - importlib.util.find_spec wrapper
 
 

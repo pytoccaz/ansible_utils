@@ -1,3 +1,7 @@
+## v1.3.0 (2023-11-29)
+
+- Add binary_path lookup plugin
+
 ## v1.2.0 (2023-11-07)
 
 - Python_module_check: add name in retuned info 

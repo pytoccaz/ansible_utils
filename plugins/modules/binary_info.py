@@ -12,8 +12,8 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: binary_info
-short_description: Find system executable
-description: Find system executable in PATH.
+short_description: Finds a system executable
+description: Finds a system executable within C($PATH).
 
 version_added: "1.0.0"
 
@@ -90,21 +90,20 @@ uid:
 '''
 
 EXAMPLES = '''
-    - name: Search python3 in PATH
-      pytoccaz.utils.binary_info:
-        name: python3
-      register: python_binary
+- name: Search python3 in PATH
+  pytoccaz.utils.binary_info:
+    name: python3
+  register: python_binary
 
-    - debug:
-        var: python_binary.path
-
+- debug:
+    var: python_binary.path
 '''
 
 from ansible.module_utils.basic import AnsibleModule
 
 
-def binary(module, path, opt_dirs):
-    return module.get_bin_path(path, opt_dirs=opt_dirs)
+def binary(module, name, opt_dirs):
+    return module.get_bin_path(name, opt_dirs=opt_dirs)
 
 
 def main():

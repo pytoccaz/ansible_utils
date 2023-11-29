@@ -13,9 +13,9 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: python_module_info
-short_description: Check a python module is installed or not
+short_description: Checks whether a python module is installed or not
 description:
-    - Check a python module or package is available on target host
+    - Checks a python module or package is available on target host
     - importlib.util.find_spec wrapper
 
 version_added: "1.1.0"
@@ -60,34 +60,33 @@ name:
 '''
 
 EXAMPLES = '''
-    - name: Is python-docker available ?
-      pytoccaz.utils.python_module_info:
-        name: docker
-      register: module_docker
+- name: Is python-docker available ?
+  pytoccaz.utils.python_module_info:
+    name: docker
+  register: module_docker
 
-    - debug:
-        var: module_docker.is_installed
+- debug:
+    var: module_docker.is_installed
 
-    - name: Is html.parser available ?
-      pytoccaz.utils.python_module_info:
-        name: html.parser
-      register: module_parser
+- name: Is html.parser available ?
+  pytoccaz.utils.python_module_info:
+    name: html.parser
+  register: module_parser
 
-    - debug:
-        var: module_parser.is_installed
+- debug:
+    var: module_parser.is_installed
 
-    - name: Is html.parser available (using package parameter) ?
-      pytoccaz.utils.python_module_info:
-        name: .parser
-        package: html
-      register: module_parser
+- name: Is html.parser available (using package parameter) ?
+  pytoccaz.utils.python_module_info:
+    name: .parser
+    package: html
+  register: module_parser
 
-    - debug:
-        var: module_parser.is_installed
+- debug:
+    var: module_parser.is_installed
 '''
 from ansible.module_utils.basic import AnsibleModule
 from importlib.util import find_spec, resolve_name
-from importlib.metadata import version
 
 
 def available(modulename: str, path: str = None) -> bool:
