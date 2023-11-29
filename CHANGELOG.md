@@ -1,3 +1,7 @@
+## v1.3.1 (2023-11-29)
+
+- binary_path: fix name argument bug
+
 ## v1.3.0 (2023-11-29)
 
 - Add binary_path lookup plugin

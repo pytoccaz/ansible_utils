@@ -37,7 +37,7 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>name</b>
+                    <b>binary</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
                         <span style="color: purple">string</span>
@@ -62,9 +62,9 @@ Examples
 
 .. code-block:: yaml
 
-    - name: Generate random string with length 12
+    - name: Find python3 in PATH
       ansible.builtin.debug:
-        var: lookup('pytoccaz.utils.binary_path', name='python3')
+        var: lookup('pytoccaz.utils.binary_path', binary='python3')
       # Example result: ['/usr/bin/python3']
 
 
@@ -109,7 +109,3 @@ Authors
 ~~~~~~~
 
 - Olivier Bernard (@pytoccaz)
-
-
-.. hint::
-    Configuration entries for each entry type have a low to high priority order. For example, a variable that is lower in the list will override a variable that is higher up.

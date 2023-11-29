@@ -16,15 +16,15 @@ DOCUMENTATION = r"""
     description:
       - Returns the absolute path of a system executable within C($PATH)
     options:
-      name:
+      binary:
         description: The name of the executable to find.
         type: str
 """
 
 EXAMPLES = r"""
-- name: Generate random string with length 12
+- name: Find python3 in PATH
   ansible.builtin.debug:
-    var: lookup('pytoccaz.utils.binary_path', name='python3')
+    var: lookup('pytoccaz.utils.binary_path', binary='python3')
   # Example result: ['/usr/bin/python3']
 """
 
@@ -69,6 +69,6 @@ class LookupModule(LookupBase):
 
         self.set_options(var_options=variables, direct=kwargs)
 
-        name = self.get_option("name")
+        binary = self.get_option("binary")
 
-        return [self.get_bin_path(name)]
+        return [self.get_bin_path(binary)]
