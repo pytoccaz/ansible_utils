@@ -11,10 +11,10 @@ DOCUMENTATION = r"""
     name: binary_path
     author:
       - Olivier Bernard (@pytoccaz)
-    short_description: Returns a system executable path
+    short_description: Returns a system executable path on the Ansible controller
     version_added: '1.3.0'
     description:
-      - Returns the absolute path of a system executable within C($PATH)
+      - Returns the absolute path of a system executable within the Ansible controller C($PATH)
     options:
       binary:
         description: The name of the executable to find.

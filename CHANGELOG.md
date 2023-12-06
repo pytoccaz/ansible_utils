@@ -1,3 +1,7 @@
+## v1.4.0 (2023-12-07)
+
+- Add module env_info 
+
 ## v1.3.1 (2023-11-29)
 
 - binary_path: fix name argument bug

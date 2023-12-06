@@ -1,14 +1,14 @@
-.. _pytoccaz.utils.binary_path_lookup:
+.. _pytoccaz.utils.env_info_module:
 
 
-**************************
-pytoccaz.utils.binary_path
-**************************
+***********************
+pytoccaz.utils.env_info
+***********************
 
-**Returns a system executable path on the Ansible controller**
+**Queries environment variables on the target host**
 
 
-Version added: 1.3.0
+Version added: 1.4.0
 
 .. contents::
    :local:
@@ -17,7 +17,7 @@ Version added: 1.3.0
 
 Synopsis
 --------
-- Returns the absolute path of a system executable within the Ansible controller ``$PATH``
+- Queries environment variables on the target host (python os.getenv wrapper)
 
 
 
@@ -31,24 +31,24 @@ Parameters
         <tr>
             <th colspan="1">Parameter</th>
             <th>Choices/<font color="blue">Defaults</font></th>
-                <th>Configuration</th>
             <th width="100%">Comments</th>
         </tr>
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>binary</b>
+                    <b>envs</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
-                        <span style="color: purple">string</span>
+                        <span style="color: purple">list</span>
+                         / <span style="color: purple">elements=string</span>
+                         / <span style="color: red">required</span>
                     </div>
                 </td>
                 <td>
                 </td>
-                    <td>
-                    </td>
                 <td>
-                        <div>The name of the executable to find.</div>
+                        <div>A list of system environment variables to retrieve</div>
+                        <div style="font-size: small; color: darkgreen"><br/>aliases: get, get_envs, env_list</div>
                 </td>
             </tr>
     </table>
@@ -62,16 +62,18 @@ Examples
 
 .. code-block:: yaml
 
-    - name: Find python3 in PATH
-      ansible.builtin.debug:
-        var: lookup('pytoccaz.utils.binary_path', binary='python3')
-      # Example result: ['/usr/bin/python3']
+    - name: Query for some envs
+      pytoccaz.utils.env_info:
+        envs:
+          - HOME
+          - LANG
+      register: get_envs
 
 
 
 Return Values
 -------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this lookup:
+Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this module:
 
 .. raw:: html
 
@@ -84,17 +86,18 @@ Common return values are documented `here <https://docs.ansible.com/ansible/late
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>_raw</b>
+                    <b>result</b>
                     <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
                     <div style="font-size: small">
-                      <span style="color: purple">list</span>
-                       / <span style="color: purple">elements=string</span>
+                      <span style="color: purple">dictionary</span>
                     </div>
                 </td>
-                <td></td>
+                <td>success</td>
                 <td>
-                            <div>A one-element list containing the path when the executable is found, else an empty string</div>
+                            <div>A key-value dictionary with keys as variable names and their corresponding values as values</div>
                     <br/>
+                        <div style="font-size: smaller"><b>Sample:</b></div>
+                        <div style="font-size: smaller; color: blue; word-wrap: break-word; word-break: break-all;">{&#x27;PATH&#x27;: &#x27;/usr/bin:/etc/local/bin&#x27;, &#x27;USERNAME&#x27;: &#x27;olivier&#x27;}</div>
                 </td>
             </tr>
     </table>

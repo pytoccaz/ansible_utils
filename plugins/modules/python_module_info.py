@@ -85,8 +85,8 @@ EXAMPLES = '''
 - debug:
     var: module_parser.is_installed
 '''
-from ansible.module_utils.basic import AnsibleModule
 from importlib.util import find_spec, resolve_name
+from ansible.module_utils.basic import AnsibleModule
 
 
 def available(modulename: str, path: str = None) -> bool:
@@ -100,7 +100,8 @@ def available(modulename: str, path: str = None) -> bool:
 
 def main():
     module = AnsibleModule(argument_spec=dict(
-        name=dict(required=True, type='str', aliases=['module_name', 'module']),
+        name=dict(required=True, type='str',
+                  aliases=['module_name', 'module']),
         package=dict(required=False, type='str'),
     ),
         supports_check_mode=True
@@ -116,7 +117,8 @@ def main():
     except (ValueError, AttributeError) as e:
         module.fail_json(msg=str(e), changed=False)
 
-    module.exit_json(changed=False, name=resolve_name(name, package), is_installed=is_installed)
+    module.exit_json(changed=False, name=resolve_name(
+        name, package), is_installed=is_installed)
 
 
 if __name__ == "__main__":

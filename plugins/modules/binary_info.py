@@ -12,8 +12,8 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: binary_info
-short_description: Finds a system executable
-description: Finds a system executable within C($PATH).
+short_description: Finds a system executable on the target host
+description: Finds a system executable within C($PATH) on the target host.
 
 version_added: "1.0.0"
 
@@ -38,7 +38,6 @@ options:
 
 author:
     - Olivier Bernard (@pytoccaz)
-
 '''
 
 RETURN = '''
