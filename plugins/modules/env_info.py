@@ -25,10 +25,13 @@ options:
         required: true
         elements: str
         type: list
-        aliases:
-            - get
-            - get_envs
-            - env_list
+        aliases: [ "get", "get_envs", "env_list"]
+    lower:
+        description: |
+            Whether to lower variable names (dictionary keys) in result output
+        default: no
+        type: bool
+        aliases: [ "lower_keys", "lower_env_names" ]
 
 author:
     - Olivier Bernard (@pytoccaz)
@@ -59,17 +62,27 @@ from ansible.module_utils.basic import AnsibleModule
 def get_envs(lst: list) -> dict:
     return {env: getenv(env) for env in lst}
 
+def lower_keys(dic: dict) -> dict:
+    '''
+        Puts the keys of the input dictionary in lowcase 
+    '''
+    return { k.lower(): v for k, v in dic.items() } 
 
 def main():
     module = AnsibleModule(
         argument_spec=dict(
             envs=dict(required=True, type="list", elements="str",
                       aliases=["get", "get_envs", "env_list"]),
+            lower=dict(type="bool", default=False,  
+                      aliases=["lower_keys", "lower_env_names"]),
         ),
         supports_check_mode=True
     )
 
     envs = get_envs(module.params["envs"])
+
+    if module.params["lower"]:
+        envs = lower_keys(envs)
 
     module.exit_json(changed=False, result=envs)
 
